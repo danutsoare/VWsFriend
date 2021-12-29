@@ -15,7 +15,7 @@ services:
       - DATABASE_URL=postgresql://${DB_USER-admin}:${DB_PASSWORD-secret}@${DB_HOSTNAME-postgresdbbackend}:${DB_PORT-5432}/${DB_NAME-vwsfriend}
       - ADDITIONAL_PARAMETERS=--with-database --with-abrp -vv
     depends_on:
-      postgresdb:
+      timescale:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
@@ -24,8 +24,8 @@ services:
       timeout: 10s
       retries: 3
 
-  postgresdb:
-    image: postgres:13
+  timescale:
+    image: timescale/timescaledb:latest-pg13
     networks:
       backend:
         aliases:
